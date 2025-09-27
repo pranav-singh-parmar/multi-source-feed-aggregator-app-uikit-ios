@@ -1,0 +1,35 @@
+//
+//  UserAPIDataSource.swift
+//  MultiSourceFeedAggregatorApp
+//
+//  Created by Pranav Singh on 27/09/25.
+//
+
+import Foundation
+
+class UserAPIDataSource: UserDataSourceProtocol {
+    func getUsers(completion:  @escaping (DataSourceResult<[UserModel]>) -> Void) {
+        do {
+            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .users)
+            urlRequest.requestResponse(in: .json)
+            
+            urlRequest.sendAPIRequest { [weak self] result in
+                guard self != nil else { return }
+                
+                switch result {
+                case .success(_, let data):
+                    if let users = data.toStruct([UserModel].self) {
+                        completion(.success(users))
+                    } else {
+                        completion(.failure(.decodingError))
+                    }
+                case .failure(let error, let data):
+                    let errorMessage = data?.getErrorMessageFromJSONData(withAPIRequestError: error)
+                    completion(.failure(.apiRequestError(error, errorMessage)))
+                }
+            }
+        } catch {
+            completion(.failure(.urlRequestError(error)))
+        }
+    }
+}
