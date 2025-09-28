@@ -8,12 +8,19 @@
 import Foundation
 
 class PostImageAPIDataSourceIMPL: PostImageAPIDataSource {
+    
+    private let sender: RequestSender
+        
+    init(sender: RequestSender = URLRequestSender()) {
+        self.sender = sender
+    }
+    
     func getImages(completion:  @escaping (DataSourceResult<[PostImageModel]>) -> Void) {
         do {
             var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .photos)
             urlRequest.requestResponse(in: .json)
             
-            urlRequest.sendAPIRequest { [weak self] result in
+            sender.send(urlRequest) { [weak self] result in
                 guard self != nil else { return }
                 
                 switch result {

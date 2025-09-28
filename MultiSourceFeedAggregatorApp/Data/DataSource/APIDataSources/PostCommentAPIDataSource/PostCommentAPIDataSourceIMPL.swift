@@ -8,12 +8,19 @@
 import Foundation
 
 class PostCommentAPIDataSourceIMPL: PostCommentAPIDataSource {
+    
+    private let sender: RequestSender
+        
+    init(sender: RequestSender = URLRequestSender()) {
+        self.sender = sender
+    }
+    
     func getComments(completion:  @escaping (DataSourceResult<[PostCommentModel]>) -> Void) {
         do {
             var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .comments)
             urlRequest.requestResponse(in: .json)
             
-            urlRequest.sendAPIRequest { [weak self] result in
+            sender.send(urlRequest) { [weak self] result in
                 guard self != nil else { return }
                 
                 switch result {

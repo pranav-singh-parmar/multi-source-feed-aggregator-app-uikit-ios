@@ -61,6 +61,9 @@ extension PostDetailsViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: postDetailsCellIdentifier,
                                                      for: indexPath) as! PostDetailsTableViewCell
             
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openLink))
+            cell.authorWebsiteLabel.addGestureRecognizer(tapGesture)
+            
             cell.setUpView(withFeed: feedDetails)
             
             return cell
@@ -71,6 +74,20 @@ extension PostDetailsViewController: UITableViewDataSource {
             cell.setUpView(withPostComment: feedDetails?.comments?[indexPath.row])
             
             return cell
+        }
+    }
+    
+    //MARK: Table View Tap
+    @objc func openLink(_ sender: UITapGestureRecognizer) {
+        var website = feedDetails?.user?.website ?? ""
+        if !website.isEmpty,
+           !website.lowercased().hasPrefix("http") {
+            website = "http://" + website
+        }
+        if let url = URL(string: website) {
+            UIApplication.shared.open(url)
+        } else {
+            self.showToast(withMessage: "Invalid URL")
         }
     }
 }

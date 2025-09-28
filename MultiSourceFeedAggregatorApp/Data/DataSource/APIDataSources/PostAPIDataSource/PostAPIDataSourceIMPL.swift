@@ -8,12 +8,19 @@
 import Foundation
 
 class PostAPIDataSourceIMPL: PostAPIDataSource {
+    
+    private let sender: RequestSender
+        
+    init(sender: RequestSender = URLRequestSender()) {
+        self.sender = sender
+    }
+    
     func getPosts(completion:  @escaping (DataSourceResult<[PostModel]>) -> Void) {
         do {
             var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .posts)
             urlRequest.requestResponse(in: .json)
             
-            urlRequest.sendAPIRequest { [weak self] result in
+            sender.send(urlRequest) { [weak self] result in
                 guard self != nil else { return }
                 
                 switch result {

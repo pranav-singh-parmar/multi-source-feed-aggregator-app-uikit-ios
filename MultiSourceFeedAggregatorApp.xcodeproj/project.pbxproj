@@ -10,7 +10,18 @@
 		1519005E2E8952CE00A2AE2C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1519005D2E8952CE00A2AE2C /* Kingfisher */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		151900882E896F1100A2AE2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15DAD88C2E87E78E00A7DD50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 15DAD8932E87E78E00A7DD50;
+			remoteInfo = MultiSourceFeedAggregatorApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		151900842E896F1100A2AE2C /* MultiSourceFeedAggregatorAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MultiSourceFeedAggregatorAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		15DAD8942E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiSourceFeedAggregatorApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -18,13 +29,18 @@
 		15DAD8A62E87E79100A7DD50 /* Exceptions for "MultiSourceFeedAggregatorApp" folder in "MultiSourceFeedAggregatorApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				App/Info.plist,
+				Info.plist,
 			);
 			target = 15DAD8932E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		151900852E896F1100A2AE2C /* MultiSourceFeedAggregatorAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MultiSourceFeedAggregatorAppTests;
+			sourceTree = "<group>";
+		};
 		15DAD8962E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -36,6 +52,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		151900812E896F1100A2AE2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15DAD8912E87E78E00A7DD50 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -51,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				15DAD8962E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp */,
+				151900852E896F1100A2AE2C /* MultiSourceFeedAggregatorAppTests */,
 				15DAD8952E87E78E00A7DD50 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				15DAD8942E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp.app */,
+				151900842E896F1100A2AE2C /* MultiSourceFeedAggregatorAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -66,6 +91,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		151900832E896F1100A2AE2C /* MultiSourceFeedAggregatorAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1519008A2E896F1100A2AE2C /* Build configuration list for PBXNativeTarget "MultiSourceFeedAggregatorAppTests" */;
+			buildPhases = (
+				151900802E896F1100A2AE2C /* Sources */,
+				151900812E896F1100A2AE2C /* Frameworks */,
+				151900822E896F1100A2AE2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				151900892E896F1100A2AE2C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				151900852E896F1100A2AE2C /* MultiSourceFeedAggregatorAppTests */,
+			);
+			name = MultiSourceFeedAggregatorAppTests;
+			packageProductDependencies = (
+			);
+			productName = MultiSourceFeedAggregatorAppTests;
+			productReference = 151900842E896F1100A2AE2C /* MultiSourceFeedAggregatorAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		15DAD8932E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15DAD8A72E87E79100A7DD50 /* Build configuration list for PBXNativeTarget "MultiSourceFeedAggregatorApp" */;
@@ -99,6 +147,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					151900832E896F1100A2AE2C = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 15DAD8932E87E78E00A7DD50;
+					};
 					15DAD8932E87E78E00A7DD50 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -122,11 +174,19 @@
 			projectRoot = "";
 			targets = (
 				15DAD8932E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp */,
+				151900832E896F1100A2AE2C /* MultiSourceFeedAggregatorAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		151900822E896F1100A2AE2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15DAD8922E87E78E00A7DD50 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,6 +197,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		151900802E896F1100A2AE2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15DAD8902E87E78E00A7DD50 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -146,7 +213,49 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		151900892E896F1100A2AE2C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 15DAD8932E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp */;
+			targetProxy = 151900882E896F1100A2AE2C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		1519008B2E896F1100A2AE2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.me.MultiSourceFeedAggregatorAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MultiSourceFeedAggregatorApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MultiSourceFeedAggregatorApp";
+			};
+			name = Debug;
+		};
+		1519008C2E896F1100A2AE2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.me.MultiSourceFeedAggregatorAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MultiSourceFeedAggregatorApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MultiSourceFeedAggregatorApp";
+			};
+			name = Release;
+		};
 		15DAD8A82E87E79100A7DD50 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -321,6 +430,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1519008A2E896F1100A2AE2C /* Build configuration list for PBXNativeTarget "MultiSourceFeedAggregatorAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1519008B2E896F1100A2AE2C /* Debug */,
+				1519008C2E896F1100A2AE2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		15DAD88F2E87E78E00A7DD50 /* Build configuration list for PBXProject "MultiSourceFeedAggregatorApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

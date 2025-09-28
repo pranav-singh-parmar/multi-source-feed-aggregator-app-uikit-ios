@@ -7,13 +7,6 @@
 
 import Foundation
 
-protocol FeedViewDelegate: AnyObject {
-    func didStartFetchingDetails()
-    func didReloadFeeds(withError error: FeedUseCaseError?)
-    func didInsertFeeds(at indexPaths: [IndexPath])
-    func didToggleCommentsVisibility(to visible: Bool)
-}
-
 class FeedViewModel {
     //MARK: Properties
     private(set) var getPostsAS: APIRequestStatus = .notConsumedOnce
@@ -91,5 +84,16 @@ class FeedViewModel {
                 self.delegate?.didReloadFeeds(withError: error)
             }
         }
+    }
+}
+
+//MARK: - For TestCases
+extension FeedViewModel {
+    func setFeedItemsForTesting(_ items: [FeedItem], currentLength: Int, total: Int) {
+        #if DEBUG
+        self.feedItems = items
+        self.currentLength = currentLength
+        self.total = total
+        #endif
     }
 }

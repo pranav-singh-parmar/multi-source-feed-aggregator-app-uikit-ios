@@ -77,41 +77,45 @@ class FeedUseCaseIMPL: FeedUseCase {
             guard let self else { return }
             
             if case .failure(let error) = postResult {
-                switch error {
-                case .dataSourceError(let dataSourceError):
-                    switch dataSourceError {
-                    case .apiRequestError(let apiRequestError, let errorMessage):
-                        switch apiRequestError {
-                        case .internetNotConnected:
-                            completion(.failure(.internetNotConnected))
-                        default:
-                            completion(.failure(.somethingWentWrong(errorMessage: errorMessage)))
-                        }
-                    default:
-                        completion(.failure(.somethingWentWrong(errorMessage: nil)))
-                    }
-                }
+                completion(.failure(getFeedUseCaseError(from: error)))
                 return
             }
             
-            if case .failure(let e) = postResult {
-                completion(.failure(.somethingWentWrong(errorMessage: nil)))
+            if case .failure(let error) = userResult {
+                completion(.failure(getFeedUseCaseError(from: error)))
                 return
             }
             
-            if case .failure(let e) = postResult {
-                completion(.failure(.somethingWentWrong(errorMessage: nil)))
+            if case .failure(let error) = postCommentResult {
+                completion(.failure(getFeedUseCaseError(from: error)))
                 return
             }
             
-            if case .failure(let e) = postResult {
-                completion(.failure(.somethingWentWrong(errorMessage: nil)))
+            if case .failure(let error) = postImageResult {
+                completion(.failure(getFeedUseCaseError(from: error)))
                 return
             }
             
             let feedItems = paginate(from: 0, withLimit: limit)
             completion(.success(Feed(totalPosts: totalPosts,
                                      items: feedItems)))
+        }
+    }
+    
+    private func getFeedUseCaseError(from error: RepositoryError) -> FeedUseCaseError {
+        switch error {
+        case .dataSourceError(let dataSourceError):
+            switch dataSourceError {
+            case .apiRequestError(let apiRequestError, let errorMessage):
+                switch apiRequestError {
+                case .internetNotConnected:
+                    return .internetNotConnected
+                default:
+                    return .somethingWentWrong(errorMessage: errorMessage)
+                }
+            default:
+                return .somethingWentWrong(errorMessage: nil)
+            }
         }
     }
     

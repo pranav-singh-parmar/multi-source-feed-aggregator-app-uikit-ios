@@ -10,7 +10,7 @@ import os
 
 extension URLRequest {
     //MARK: - Logs Related
-    #if DEBUG
+#if DEBUG
     private static let apiErrorTAG = "APIError:"
     
     private static let logger = Logger.init(subsystem: Bundle.main.getBundleIdentifier ?? "", category: "ApiServices")
@@ -29,7 +29,7 @@ extension URLRequest {
         URLRequest.logger.log(level: .default, "\(str)")
         URLRequest.logs.removeValue(forKey: getURLString)
     }
-    #endif
+#endif
     
     //MARK: - Computed vars
     var getURLString: String {
@@ -79,21 +79,21 @@ extension URLRequest {
             
             self.url = url
             
-            #if DEBUG
+#if DEBUG
             printRequestDetailsTag(isStarted: true)
             addLog("Query Parameters:")
             addLog(queryParameters.toJSONStringFormat() ?? "")
             addLog("URL with Query Parameter:", self.getURLString)
-            #endif
+#endif
         } else {
-            #if DEBUG
+#if DEBUG
             printRequestDetailsTag(isStarted: true)
-            #endif
+#endif
         }
         self.httpMethod = httpMethod.rawValue
-        #if DEBUG
+#if DEBUG
         addLog("HTTP Method:", self.httpMethod ?? "http method not assigned")
-        #endif
+#endif
     }
     
     //MARK: - URLComponents
@@ -126,187 +126,48 @@ extension URLRequest {
         return self.allHTTPHeaderFields?.first(where: { $0.key == key })?.value
     }
     
-    //MARK: - Hit API
-    func sendAPIRequest(completion: @escaping (APIRequestResult<Data, APIRequestError>) -> Void) {
-        
-        #if DEBUG
-        printHeaders()
-        printRequestDetailsTag(isStarted: false)
-        printLogs()
-        #endif
-        
-        URLSession.shared.dataTask(with: self) { data, response, error in
-            
-            #if DEBUG
-            printResponseDetailsTag(isStarted: true)
-            defer {
-                printLogs()
-            }
-            #endif
-      
-            guard error == nil else {
-                #if DEBUG
-                addLog("Error Localised Description:", error!.localizedDescription)
-                #endif
-                let errorCode = (error! as NSError).code
-                switch errorCode {
-                case NSURLErrorTimedOut:
-                    completion(.failure(printAndReturnAPIRequestError(.timedOut), data))
-                    return
-                case NSURLErrorNotConnectedToInternet:
-                    completion(.failure(printAndReturnAPIRequestError(.internetNotConnected), data))
-                    return
-                case NSURLErrorNetworkConnectionLost:
-                    completion(.failure(printAndReturnAPIRequestError(.networkConnectionLost), data))
-                    return
-                default:
-                    completion(.failure(printAndReturnAPIRequestError(.urlError(errorCode: errorCode)), nil))
-                    return
-                }
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                completion(.failure(printAndReturnAPIRequestError(.invalidHTTPURLResponse), data))
-                return
-            }
-            
-            #if DEBUG
-            addLog("Status Code:", response.statusCode)
-            #endif
-            
-            guard let data = data else{
-                completion(.failure(printAndReturnAPIRequestError(.invalidHTTPURLResponse), data))
-                return
-            }
-            
-            guard let mimeType = response.mimeType else {
-                completion(.failure(printAndReturnAPIRequestError(.missingMimeType), data))
-                return
-            }
-            
-            if let accept = self.getHeaderValue(forKey: "Accept"),
-               accept != mimeType {
-#if DEBUG
-                addLog("Wrong MIME type!")
-                addLog("Accept Key sent in header:", accept)
-                addLog("MimeType received in Response:", mimeType)
-                if let paragraphs = String(data: data, encoding: .utf8)?.components(separatedBy: .newlines) {
-                    addLog("Data received from API:")
-                    for line in paragraphs {
-                        addLog(line)
-                    }
-                } else {
-                    addLog("Default Message: Not able to read data")
-                }
-#endif
-                completion(
-                    .failure(
-                        printAndReturnAPIRequestError(.mimeTypeMismatched),
-                        data
-                    )
-                )
-                return
-            }
-            
-#if DEBUG
-            do {
-                let jsonConvert = try JSONSerialization.jsonObject(with: data, options: [])
-                if let json = jsonConvert as? JSONKeyValuePair {
-                    addLog(json.toJSONStringFormat() ?? "")
-                } else if let jsonArray = jsonConvert as? [JSONKeyValuePair] {
-                    addLog(jsonArray.toJSONStringFormat() ?? "")
-                } else {
-                    addLog("Response is neither Json, nor array of Json")
-                }
-            } catch {
-                print("Can't Fetch JSON Response:", error)
-            }
-#endif
-            
-            switch response.statusCode {
-            case 100...199:
-                completion(
-                    .failure(
-                        printAndReturnAPIRequestError(.informationalError(statusCode: response.statusCode)),
-                        data
-                    )
-                )
-                return
-            case 200...299:
-                printResponseDetailsTag(isStarted: false)
-                completion(
-                    .success(statusCode: response.statusCode, data)
-                )
-                return
-            case 300...399:
-                completion(
-                    .failure(
-                        printAndReturnAPIRequestError(.redirectionError(statusCode: response.statusCode)),
-                        data)
-                )
-                return
-            case 400...499:
-                let clientErrorEnum = ClientErrorsEnum.getCorrespondingValue(forStatusCode: response.statusCode)
-                completion(
-                    .failure(
-                        printAndReturnAPIRequestError(.clientError(clientErrorEnum)),
-                        data)
-                )
-                return
-            case 500...599:
-                completion(
-                    .failure(
-                        printAndReturnAPIRequestError(.serverError(statusCode: response.statusCode)),
-                        data)
-                )
-                return
-            default:
-                completion(
-                    .failure(
-                        printAndReturnAPIRequestError(.unknown(statusCode: response.statusCode)),
-                        data)
-                )
-                return
-            }
-        }.resume()
-    }
-    
     //MARK: - Print and return API error
-    private func printAndReturnAPIRequestError(_ apiError: APIRequestError) -> APIRequestError {
+    func printAndReturnAPIRequestError(_ apiError: APIRequestError) -> APIRequestError {
         #if DEBUG
         printApiError(apiError)
         #endif
         return apiError
     }
     
-    #if DEBUG
     //MARK: - Print Related Functions
-    private func printHeaders() {
+    func printHeaders() {
+#if DEBUG
         addLog("Headers:")
         addLog((self.allHTTPHeaderFields as JSONKeyValuePair?)?.toJSONStringFormat() ?? "")
+#endif
     }
     
-    private func printApiError(_ apiError: APIRequestError) {
+    func printApiError(_ apiError: APIRequestError) {
+#if DEBUG
         addLog(URLRequest.apiErrorTAG, "\(apiError)")
         printResponseDetailsTag(isStarted: false)
+#endif
     }
     
-    private func printRequestDetailsTag(isStarted: Bool) {
+    func printRequestDetailsTag(isStarted: Bool) {
+#if DEBUG
         if isStarted {
             addLog("-----URL Request Details Starts-----")
             addLog("URL:", self.getURLString)
         } else {
             addLog("-----URL Request Details Ends-----\n")
         }
+#endif
     }
     
-    private func printResponseDetailsTag(isStarted: Bool) {
+    func printResponseDetailsTag(isStarted: Bool) {
+#if DEBUG
         if isStarted {
             addLog("-----URL Response Details Starts-----")
             addLog("URL:", self.getURLString)
         } else {
             addLog("-----URL Response Details Ends-----\n")
         }
+#endif
     }
-    #endif
 }

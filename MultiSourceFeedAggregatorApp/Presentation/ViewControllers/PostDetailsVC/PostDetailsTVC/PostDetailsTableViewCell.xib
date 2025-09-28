@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="kb1-nY-PKC">
-                        <rect key="frame" x="16" y="15.999999999999993" width="288" height="99.333333333333314"/>
+                        <rect key="frame" x="16" y="16.000000000000007" width="288" height="125.66666666666669"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aRd-gC-IhG">
                                 <rect key="frame" x="0.0" y="0.0" width="288" height="20.333333333333332"/>
@@ -31,14 +31,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-pL-Uj6">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Mq-xk-EyP">
                                 <rect key="frame" x="0.0" y="52.666666666666671" width="288" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SW3-Mc-Wzl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-pL-Uj6">
                                 <rect key="frame" x="0.0" y="79" width="288" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SW3-Mc-Wzl">
+                                <rect key="frame" x="0.0" y="105.33333333333333" width="288" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -46,13 +52,13 @@
                         </subviews>
                     </stackView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mdv-bv-FrQ">
-                        <rect key="frame" x="16" y="123.33333333333331" width="288" height="288"/>
+                        <rect key="frame" x="16" y="149.66666666666663" width="288" height="288"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="mdv-bv-FrQ" secondAttribute="height" multiplier="1:1" id="Zl1-fb-BrH"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="20i-vl-5AQ">
-                        <rect key="frame" x="16" y="419.33333333333331" width="288" height="73"/>
+                        <rect key="frame" x="16" y="445.66666666666669" width="288" height="73.000000000000057"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Dk-83-3Bb">
                                 <rect key="frame" x="0.0" y="0.0" width="288" height="20.333333333333332"/>
@@ -61,13 +67,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P3r-mC-IOV">
-                                <rect key="frame" x="0.0" y="26.333333333333371" width="288" height="20.333333333333329"/>
+                                <rect key="frame" x="0.0" y="26.333333333333314" width="288" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zrQ-W5-2aT">
-                                <rect key="frame" x="0.0" y="52.666666666666686" width="288" height="20.333333333333329"/>
+                                <rect key="frame" x="0.0" y="52.666666666666629" width="288" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -94,6 +100,7 @@
                 <outlet property="authorCompanyLabel" destination="1rB-pL-Uj6" id="deK-JG-iGX"/>
                 <outlet property="authorContactLabel" destination="hZO-Lm-B3P" id="9yV-uC-xAU"/>
                 <outlet property="authorNameLabel" destination="aRd-gC-IhG" id="ZEZ-Fa-hEc"/>
+                <outlet property="authorWebsiteLabel" destination="2Mq-xk-EyP" id="dlO-x5-rmi"/>
                 <outlet property="commentsLabel" destination="zrQ-W5-2aT" id="Q8z-Gq-3CT"/>
                 <outlet property="postBodyLabel" destination="P3r-mC-IOV" id="n60-uu-Utd"/>
                 <outlet property="postIV" destination="mdv-bv-FrQ" id="6bl-GE-yL6"/>
