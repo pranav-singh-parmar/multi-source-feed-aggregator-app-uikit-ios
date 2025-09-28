@@ -21,8 +21,8 @@ final class PostImageRepositoryTests: XCTestCase {
         repository.getImages { result in
             switch result {
             case .success(let postImages):
-                XCTAssertEqual(postImages.count, 1)
-                XCTAssertEqual(postImages.first?.id, PostImageModel.getTestModelOneID)
+                XCTAssertEqual(postImages.data.count, 1)
+                XCTAssertEqual(postImages.data.first?.id, PostImageModel.getTestModelOneID)
             case .failure:
                 XCTFail("Expected success, got failure")
             }
@@ -59,8 +59,6 @@ final class PostImageRepositoryTests: XCTestCase {
                     default:
                         XCTFail("Expected apiRequestError")
                     }
-                default:
-                    XCTFail("Expected apiDataSourceError")
                 }
             }
             expectation.fulfill()
@@ -68,4 +66,61 @@ final class PostImageRepositoryTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
     }
+    
+    func testGetImagesReturnsCachedImagesWhenNoInternet() {
+        let mockCachedPostImage = [PostImageModel.getTestModelOne]
+        let apiError = APIDataSourceError.apiRequestError(.internetNotConnected, nil)
+        
+        let mockAPI = MockPostImageAPIDataSource()
+        mockAPI.result = .failure(apiError)
+        
+        let mockCache = MockPostImageCacheDataSource()
+        mockCache.cachedPostImages = mockCachedPostImage
+        
+        let repository: PostImageRepository = PostImageRepositoryIMPL(apiDS: mockAPI, cacheDS: mockCache)
+        let expectation = XCTestExpectation(description: "getImages completes")
+        
+        repository.getImages { result in
+            switch result {
+            case .success(let repositorySuccess):
+                XCTAssertEqual(repositorySuccess.data.count, 1)
+                XCTAssertEqual(repositorySuccess.data.first?.id, PostImageModel.getTestModelOneID)
+                XCTAssertTrue(repositorySuccess.isFromCache)
+            case .failure:
+                XCTFail("Expected success from cache, got failure")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetImagesReturnsFailureWhenNoInternetAndNoCache() {
+        let apiError = APIDataSourceError.apiRequestError(.internetNotConnected, nil)
+        
+        let mockAPI = MockPostImageAPIDataSource()
+        mockAPI.result = .failure(apiError)
+        
+        let mockCache = MockPostImageCacheDataSource()
+        mockCache.cachedPostImages = []
+        
+        let repository: PostImageRepository = PostImageRepositoryIMPL(apiDS: mockAPI, cacheDS: mockCache)
+        let expectation = XCTestExpectation(description: "getImages completes")
+        
+        repository.getImages { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure, got success")
+            case .failure(let error):
+                switch error {
+                case .apiDataSourceError(let apiDataSourceError):
+                    XCTAssertEqual(apiDataSourceError.localizedDescription, apiError.localizedDescription)
+                }
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+
 }

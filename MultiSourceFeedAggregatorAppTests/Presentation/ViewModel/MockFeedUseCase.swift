@@ -9,11 +9,11 @@
 import XCTest
 
 final class MockFeedUseCase: FeedUseCase {
-    var fetchDetailsResult: Result<Feed, FeedUseCaseError>?
+    var fetchDetailsResult: UseCaseResult<Feed>?
     var paginateResult: [FeedItem] = []
     
     func fetchDetails(withLimit limit: Int,
-                      completion: @escaping (Result<Feed, FeedUseCaseError>) -> Void) {
+                      completion: @escaping (UseCaseResult<Feed>) -> Void) {
         if let result = fetchDetailsResult {
             completion(result)
         }

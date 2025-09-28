@@ -18,7 +18,7 @@ final class MockFeedViewDelegate: FeedViewDelegate {
         didStartFetchingCalled = true
     }
     
-    func didReloadFeeds(withError error: FeedUseCaseError?) {
+    func didReloadFeeds(fromCache: Bool, withError error: UseCaseError?) {
         didReloadFeedsCalled = true
     }
     

@@ -163,3 +163,20 @@ class FeedUseCaseIMPL: FeedUseCase {
         }
     }
 }
+
+//MARK: - For TestCases
+extension FeedUseCaseIMPL {
+    func setValueForTesting(
+        postResult: RepositoryResult<[PostModel]>,
+        userResult: RepositoryResult<[UserModel]>,
+        postCommentResult: RepositoryResult<[PostCommentModel]>,
+        postImageResult: RepositoryResult<[PostImageModel]>
+    ) {
+        #if DEBUG
+        self.postResult = postResult
+        self.userResult = userResult
+        self.postCommentResult = postCommentResult
+        self.postImageResult = postImageResult
+        #endif
+    }
+}

@@ -21,8 +21,8 @@ final class UserRepositoryTests: XCTestCase {
         repository.getUsers { result in
             switch result {
             case .success(let users):
-                XCTAssertEqual(users.count, 1)
-                XCTAssertEqual(users.first?.id, UserModel.getTestModelOneID)
+                XCTAssertEqual(users.data.count, 1)
+                XCTAssertEqual(users.data.first?.id, UserModel.getTestModelOneID)
             case .failure:
                 XCTFail("Expected success, got failure")
             }
@@ -59,8 +59,62 @@ final class UserRepositoryTests: XCTestCase {
                     default:
                         XCTFail("Expected apiRequestError")
                     }
-                default:
-                    XCTFail("Expected apiDataSourceError")
+                }
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetUsersReturnsCachedUsersWhenNoInternet() {
+        let mockCachedUsers = [UserModel.getTestModelOne]
+        let apiError = APIDataSourceError.apiRequestError(.internetNotConnected, nil)
+        
+        let mockAPI = MockUserAPIDataSource()
+        mockAPI.result = .failure(apiError)
+        
+        let mockCache = MockUserCacheDataSource()
+        mockCache.cachedUsers = mockCachedUsers
+        
+        let repository: UserRepository = UserRepositoryIMPL(apiDS: mockAPI, cacheDS: mockCache)
+        let expectation = XCTestExpectation(description: "getUsers completes")
+        
+        repository.getUsers { result in
+            switch result {
+            case .success(let repositorySuccess):
+                XCTAssertEqual(repositorySuccess.data.count, 1)
+                XCTAssertEqual(repositorySuccess.data.first?.id, UserModel.getTestModelOneID)
+                XCTAssertTrue(repositorySuccess.isFromCache)
+            case .failure:
+                XCTFail("Expected success from cache, got failure")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetUsersReturnsFailureWhenNoInternetAndNoCache() {
+        let apiError = APIDataSourceError.apiRequestError(.internetNotConnected, nil)
+        
+        let mockAPI = MockUserAPIDataSource()
+        mockAPI.result = .failure(apiError)
+        
+        let mockCache = MockUserCacheDataSource()
+        mockCache.cachedUsers = []
+        
+        let repository: UserRepository = UserRepositoryIMPL(apiDS: mockAPI, cacheDS: mockCache)
+        let expectation = XCTestExpectation(description: "getUsers completes")
+        
+        repository.getUsers { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure, got success")
+            case .failure(let error):
+                switch error {
+                case .apiDataSourceError(let apiDataSourceError):
+                    XCTAssertEqual(apiDataSourceError.localizedDescription, apiError.localizedDescription)
                 }
             }
             expectation.fulfill()

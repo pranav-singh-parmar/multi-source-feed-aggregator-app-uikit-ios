@@ -1,5 +1,5 @@
 //
-//  PostImageDataSourceTests.swift
+//  PostImageAPIDataSourceTests.swift
 //  MultiSourceFeedAggregatorApp
 //
 //  Created by Pranav Singh on 28/09/25.
@@ -8,7 +8,7 @@
 @testable import MultiSourceFeedAggregatorApp
 import XCTest
 
-final class PostImageDataSourceTests: XCTestCase {
+final class PostImageAPIDataSourceTests: XCTestCase {
 
     func testGetPostImagesReturnsPostImagesOnSuccess() {
         let mockPostImages = [PostImageModel.getTestModelOne]
