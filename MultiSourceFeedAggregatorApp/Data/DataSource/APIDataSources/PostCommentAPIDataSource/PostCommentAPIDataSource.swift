@@ -8,5 +8,5 @@
 import Foundation
 
 protocol PostCommentAPIDataSource {
-    func getComments(completion: @escaping (DataSourceResult<[PostCommentModel]>) -> Void)
+    func getComments(completion: @escaping (APIDataSourceResult<[PostCommentModel]>) -> Void)
 }

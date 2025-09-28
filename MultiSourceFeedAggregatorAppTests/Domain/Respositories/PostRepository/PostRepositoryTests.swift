@@ -33,7 +33,7 @@ final class PostRepositoryTests: XCTestCase {
     }
     
     func testGetPostsReturnsFailureOnDataSourceError() {
-        let mockError = DataSourceError.apiRequestError(.serverError(statusCode: 500), nil)
+        let mockError = APIDataSourceError.apiRequestError(.serverError(statusCode: 500), nil)
         let mockAPI = MockPostAPIDataSource()
         mockAPI.result = .failure(mockError)
         
@@ -46,8 +46,8 @@ final class PostRepositoryTests: XCTestCase {
                 XCTFail("Expected failure, got success")
             case .failure(let error):
                 switch error {
-                case .dataSourceError(let dataSourceError):
-                    switch dataSourceError {
+                case .apiDataSourceError(let apiDataSourceError):
+                    switch apiDataSourceError {
                     case .apiRequestError(let error, let message):
                         switch error {
                         case .serverError(let statusCode):
@@ -59,6 +59,8 @@ final class PostRepositoryTests: XCTestCase {
                     default:
                         XCTFail("Expected apiRequestError")
                     }
+                default:
+                    XCTFail("Expected apiDataSourceError")
                 }
             }
             expectation.fulfill()

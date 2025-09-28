@@ -12,7 +12,7 @@ final class UserAPIDataSourceTests: XCTestCase {
 
     func testGetUsersReturnsUsersOnSuccess() {
         let mockUsers = [UserModel.getTestModelOne]
-        let mockData = try! JSONEncoder().encode(mockUsers)
+        let mockData = mockUsers.toData() ?? Data()
         
         let mockSender = MockRequestSender()
         mockSender.result = .success(statusCode: 200, mockData)

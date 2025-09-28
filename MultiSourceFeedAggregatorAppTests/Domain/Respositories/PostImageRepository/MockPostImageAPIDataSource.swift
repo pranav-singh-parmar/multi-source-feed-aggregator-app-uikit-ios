@@ -9,9 +9,9 @@
 import Foundation
 
 final class MockPostImageAPIDataSource: PostImageAPIDataSource {
-    var result: DataSourceResult<[PostImageModel]>!
+    var result: APIDataSourceResult<[PostImageModel]>!
     
-    func getImages(completion: @escaping (DataSourceResult<[PostImageModel]>) -> Void) {
+    func getImages(completion: @escaping (APIDataSourceResult<[PostImageModel]>) -> Void) {
         completion(result)
     }
 }

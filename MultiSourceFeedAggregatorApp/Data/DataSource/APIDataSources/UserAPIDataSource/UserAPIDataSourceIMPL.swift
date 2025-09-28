@@ -15,7 +15,7 @@ class UserAPIDataSourceIMPL: UserAPIDataSource {
         self.sender = sender
     }
     
-    func getUsers(completion:  @escaping (DataSourceResult<[UserModel]>) -> Void) {
+    func getUsers(completion:  @escaping (APIDataSourceResult<[UserModel]>) -> Void) {
         do {
             var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .users)
             urlRequest.requestResponse(in: .json)

@@ -134,7 +134,7 @@ extension FeedViewController: FeedViewDelegate {
         }
     }
     
-    func didReloadFeeds(withError error: FeedUseCaseError?) {
+    func didReloadFeeds(fromCache: Bool, withError error: UseCaseError?) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             
@@ -154,7 +154,9 @@ extension FeedViewController: FeedViewDelegate {
                 retryButton.isHidden = false
                 feedsTV.isHidden = true
             } else {
-                if let error {
+                if fromCache {
+                    self.showToast(withMessage: "Offline Mode")
+                } else if let error {
                     self.showToast(withMessage: error.localizedDescription)
                 }
                 currentStateLabel.isHidden = true

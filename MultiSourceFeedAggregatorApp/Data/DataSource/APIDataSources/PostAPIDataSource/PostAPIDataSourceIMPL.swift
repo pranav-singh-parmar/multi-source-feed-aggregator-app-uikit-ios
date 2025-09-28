@@ -15,7 +15,7 @@ class PostAPIDataSourceIMPL: PostAPIDataSource {
         self.sender = sender
     }
     
-    func getPosts(completion:  @escaping (DataSourceResult<[PostModel]>) -> Void) {
+    func getPosts(completion:  @escaping (APIDataSourceResult<[PostModel]>) -> Void) {
         do {
             var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .posts)
             urlRequest.requestResponse(in: .json)

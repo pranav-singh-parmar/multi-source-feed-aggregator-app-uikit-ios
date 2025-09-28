@@ -71,17 +71,17 @@ class FeedViewModel {
             guard let self else { return }
             
             switch result {
-            case .success(let feed):
+            case .success(let result):
                 self.feedItems.removeAll()
-                self.feedItems.append(contentsOf: feed.items ?? [])
-                self.total = feed.totalPosts ?? 0
+                self.feedItems.append(contentsOf: result.data.items ?? [])
+                self.total = result.data.totalPosts ?? 0
                 self.currentLength = self.feedItems.count
                 
                 getPostsAS = .consumedWithSuccess
-                self.delegate?.didReloadFeeds(withError: nil)
+                self.delegate?.didReloadFeeds(fromCache: result.isFromCache, withError: nil)
             case .failure(let error):
                 getPostsAS = .consumedWithError
-                self.delegate?.didReloadFeeds(withError: error)
+                self.delegate?.didReloadFeeds(fromCache: false, withError: error)
             }
         }
     }

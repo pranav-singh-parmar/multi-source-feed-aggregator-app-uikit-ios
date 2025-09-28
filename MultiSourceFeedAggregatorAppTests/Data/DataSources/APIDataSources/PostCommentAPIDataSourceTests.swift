@@ -12,7 +12,7 @@ final class PostCommentAPIDataSourceTests: XCTestCase {
 
     func testGetCommentsReturnsPostCommentsOnSuccess() {
         let mockPostComments = [PostCommentModel.getTestModelOne]
-        let mockData = try! JSONEncoder().encode(mockPostComments)
+        let mockData = mockPostComments.toData() ?? Data()
         
         let mockSender = MockRequestSender()
         mockSender.result = .success(statusCode: 200, mockData)

@@ -12,7 +12,7 @@ final class PostImageDataSourceTests: XCTestCase {
 
     func testGetPostImagesReturnsPostImagesOnSuccess() {
         let mockPostImages = [PostImageModel.getTestModelOne]
-        let mockData = try! JSONEncoder().encode(mockPostImages)
+        let mockData = mockPostImages.toData() ?? Data()
         
         let mockSender = MockRequestSender()
         mockSender.result = .success(statusCode: 200, mockData)

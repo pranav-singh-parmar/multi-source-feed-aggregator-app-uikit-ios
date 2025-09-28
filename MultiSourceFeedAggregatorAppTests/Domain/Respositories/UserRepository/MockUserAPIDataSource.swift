@@ -9,9 +9,9 @@
 import Foundation
 
 final class MockUserAPIDataSource: UserAPIDataSource {
-    var result: DataSourceResult<[UserModel]>!
+    var result: APIDataSourceResult<[UserModel]>!
     
-    func getUsers(completion: @escaping (DataSourceResult<[UserModel]>) -> Void) {
+    func getUsers(completion: @escaping (APIDataSourceResult<[UserModel]>) -> Void) {
         completion(result)
     }
 }

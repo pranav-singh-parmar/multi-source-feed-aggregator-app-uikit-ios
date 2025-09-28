@@ -9,9 +9,9 @@
 import Foundation
 
 final class MockPostCommentAPIDataSource: PostCommentAPIDataSource {
-    var result: DataSourceResult<[PostCommentModel]>!
+    var result: APIDataSourceResult<[PostCommentModel]>!
     
-    func getComments(completion: @escaping (DataSourceResult<[PostCommentModel]>) -> Void) {
+    func getComments(completion: @escaping (APIDataSourceResult<[PostCommentModel]>) -> Void) {
         completion(result)
     }
 }

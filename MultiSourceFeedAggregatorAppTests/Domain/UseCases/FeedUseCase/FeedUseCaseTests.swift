@@ -56,7 +56,7 @@ final class FeedUseCaseTests: XCTestCase {
     
     func testFetchDetailsReturnsFailureWhenPostRepoFails() {
         let postRepo = MockPostRepository()
-        postRepo.result = .failure(.dataSourceError(.apiRequestError(.internetNotConnected, nil)))
+        postRepo.result = .failure(.apiDataSourceError(.apiRequestError(.internetNotConnected, nil)))
         
         let userRepo = MockUserRepository()
         userRepo.result = .success([])

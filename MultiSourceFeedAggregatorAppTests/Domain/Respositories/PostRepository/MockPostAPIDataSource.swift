@@ -9,9 +9,9 @@
 import Foundation
 
 final class MockPostAPIDataSource: PostAPIDataSource {
-    var result: DataSourceResult<[PostModel]>!
+    var result: APIDataSourceResult<[PostModel]>!
     
-    func getPosts(completion: @escaping (DataSourceResult<[PostModel]>) -> Void) {
+    func getPosts(completion: @escaping (APIDataSourceResult<[PostModel]>) -> Void) {
         completion(result)
     }
 }

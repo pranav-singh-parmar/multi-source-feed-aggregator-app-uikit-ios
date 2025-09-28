@@ -9,7 +9,7 @@ import Foundation
 
 protocol FeedViewDelegate: AnyObject {
     func didStartFetchingDetails()
-    func didReloadFeeds(withError error: FeedUseCaseError?)
+    func didReloadFeeds(fromCache: Bool, withError error: UseCaseError?)
     func didInsertFeeds(at indexPaths: [IndexPath])
     func didToggleCommentsVisibility(to visible: Bool)
 }

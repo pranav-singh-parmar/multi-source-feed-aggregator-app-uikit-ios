@@ -9,5 +9,5 @@
 import Foundation
 
 protocol UserAPIDataSource {
-    func getUsers(completion: @escaping (DataSourceResult<[UserModel]>) -> Void)
+    func getUsers(completion: @escaping (APIDataSourceResult<[UserModel]>) -> Void)
 }

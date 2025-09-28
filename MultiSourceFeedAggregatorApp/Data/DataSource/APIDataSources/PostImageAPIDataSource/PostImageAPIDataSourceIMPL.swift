@@ -15,7 +15,7 @@ class PostImageAPIDataSourceIMPL: PostImageAPIDataSource {
         self.sender = sender
     }
     
-    func getImages(completion:  @escaping (DataSourceResult<[PostImageModel]>) -> Void) {
+    func getImages(completion:  @escaping (APIDataSourceResult<[PostImageModel]>) -> Void) {
         do {
             var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .photos)
             urlRequest.requestResponse(in: .json)

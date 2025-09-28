@@ -15,7 +15,7 @@ class PostCommentAPIDataSourceIMPL: PostCommentAPIDataSource {
         self.sender = sender
     }
     
-    func getComments(completion:  @escaping (DataSourceResult<[PostCommentModel]>) -> Void) {
+    func getComments(completion:  @escaping (APIDataSourceResult<[PostCommentModel]>) -> Void) {
         do {
             var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .comments)
             urlRequest.requestResponse(in: .json)

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol PostImageAPIDataSource {
-    func getImages(completion: @escaping (DataSourceResult<[PostImageModel]>) -> Void)
+    func getImages(completion: @escaping (APIDataSourceResult<[PostImageModel]>) -> Void)
 }

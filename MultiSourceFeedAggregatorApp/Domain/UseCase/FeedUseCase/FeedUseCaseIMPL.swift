@@ -36,7 +36,7 @@ class FeedUseCaseIMPL: FeedUseCase {
     
     //MARK: Protocol Implementation
     func fetchDetails(withLimit limit: Int,
-                      completion: @escaping (Result<Feed, FeedUseCaseError>) -> Void) {
+                      completion: @escaping (UseCaseResult<Feed>) -> Void) {
         let dispatchGroup = DispatchGroup()
         
         dispatchGroup.enter()
@@ -44,7 +44,7 @@ class FeedUseCaseIMPL: FeedUseCase {
             guard let self else { return }
             
             postResult = result
-            totalPosts = ((try? postResult?.get()) ?? []).count
+            totalPosts = ((try? postResult?.get().data) ?? []).count
             dispatchGroup.leave()
         }
         
@@ -96,16 +96,23 @@ class FeedUseCaseIMPL: FeedUseCase {
                 return
             }
             
+            let isPostsFromCache = (try? postResult?.get().isFromCache) ?? false
+            let isUsersFromCache = (try? userResult?.get().isFromCache) ?? false
+            let isPostCommentsFromCache = (try? postCommentResult?.get().isFromCache) ?? false
+            let isPostImageFromCache = (try? postCommentResult?.get().isFromCache) ?? false
+            let isFromCache = isPostsFromCache || isUsersFromCache || isPostCommentsFromCache || isPostImageFromCache
+            
             let feedItems = paginate(from: 0, withLimit: limit)
-            completion(.success(Feed(totalPosts: totalPosts,
-                                     items: feedItems)))
+            completion(.success(UseCaseSuccess(data: Feed(totalPosts: totalPosts,
+                                                          items: feedItems),
+                                               isFromCache: isFromCache)))
         }
     }
     
-    private func getFeedUseCaseError(from error: RepositoryError) -> FeedUseCaseError {
+    private func getFeedUseCaseError(from error: RepositoryError) -> UseCaseError {
         switch error {
-        case .dataSourceError(let dataSourceError):
-            switch dataSourceError {
+        case .apiDataSourceError(let apiDataSourceError):
+            switch apiDataSourceError {
             case .apiRequestError(let apiRequestError, let errorMessage):
                 switch apiRequestError {
                 case .internetNotConnected:
@@ -120,10 +127,10 @@ class FeedUseCaseIMPL: FeedUseCase {
     }
     
     func paginate(from start: Int, withLimit limit: Int) -> [FeedItem] {
-        let posts = (try? postResult?.get()) ?? []
-        let users = (try? userResult?.get()) ?? []
-        let comments = (try? postCommentResult?.get()) ?? []
-        // let images = (try? postImageResult?.get()) ?? []
+        let posts = (try? postResult?.get().data) ?? []
+        let users = (try? userResult?.get().data) ?? []
+        let comments = (try? postCommentResult?.get().data) ?? []
+        // let images = (try? postImageResult?.get().data) ?? []
         
         let usersDict = Dictionary(uniqueKeysWithValues: users.map { ($0.id, $0) })
         let commentsDict = Dictionary(grouping: comments, by: { $0.postID })
