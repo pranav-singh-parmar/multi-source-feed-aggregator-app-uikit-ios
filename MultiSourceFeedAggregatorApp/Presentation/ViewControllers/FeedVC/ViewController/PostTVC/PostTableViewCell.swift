@@ -18,6 +18,11 @@ class PostTableViewCell: UITableViewCell {
     //MARK: TableViewCell Life Cycle Methods
     override func awakeFromNib() {
         super.awakeFromNib()
+        setUpView()
+    }
+    
+    //MARK: UI Related
+    private func setUpView() {
         self.selectionStyle = .none
         authorNameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         postTitleLabel.font = .systemFont(ofSize: 17, weight: .medium)
@@ -26,7 +31,6 @@ class PostTableViewCell: UITableViewCell {
         postTitleLabel.numberOfLines = 0
     }
     
-    //MARK: UI Related
     func setUpView(withFeedItem feedItem: FeedItem,
                    andCommentsVisibility commentsVisibility: Bool) {
         authorNameLabel.text = feedItem.user?.name ?? ""
@@ -43,7 +47,7 @@ class PostTableViewCell: UITableViewCell {
                 commentsCountLabel.text = "\(commentsCount) people have have commented"
             }
         }
-        //postIV.image = ""
+        postIV.loadImage(fromURLString: feedItem.dummyImage ?? "")
     }
     
     func updateCommentsVisibility(to visible: Bool) {

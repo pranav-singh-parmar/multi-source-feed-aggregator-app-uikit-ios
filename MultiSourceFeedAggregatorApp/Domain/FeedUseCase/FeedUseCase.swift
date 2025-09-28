@@ -6,6 +6,19 @@
 //
 
 import Foundation
+import UIKit
+
+enum FeedUseCaseError: Error, LocalizedError {
+    case somethingWentWrong
+    
+    var errorDescription: String? {
+        switch self {
+        case .somethingWentWrong:
+            return NSLocalizedString("Something Went Wrong",
+                                     comment: "Something Went Wrong")
+        }
+    }
+}
 
 class FeedUseCase {
     
@@ -15,13 +28,14 @@ class FeedUseCase {
     private let postImageREPO = PostImageRepository(dataSource: PostImageAPIDataSource())
     
     private var postResult: RepositoryResult<[PostModel]>?
-    private var totalPosts = 0
     private var userResult: RepositoryResult<[UserModel]>?
     private var postCommentResult: RepositoryResult<[PostCommentModel]>?
     private var postImageResult: RepositoryResult<[PostImageModel]>?
     
+    private var totalPosts = 0
+    
     func fetchDetails(withLimit limit: Int,
-                      completion: @escaping (Result<Feed, Error>) -> Void) {
+                      completion: @escaping (Result<Feed, FeedUseCaseError>) -> Void) {
         let dispatchGroup = DispatchGroup()
         
         dispatchGroup.enter()
@@ -62,19 +76,23 @@ class FeedUseCase {
             guard let self else { return }
             
             if case .failure(let e) = postResult {
-                print("Posts API failed: \(e.localizedDescription)")
+                completion(.failure(.somethingWentWrong))
+                return
             }
             
             if case .failure(let e) = postResult {
-                print("Posts API failed: \(e.localizedDescription)")
+                completion(.failure(.somethingWentWrong))
+                return
             }
             
             if case .failure(let e) = postResult {
-                print("Posts API failed: \(e.localizedDescription)")
+                completion(.failure(.somethingWentWrong))
+                return
             }
             
             if case .failure(let e) = postResult {
-                print("Posts API failed: \(e.localizedDescription)")
+                completion(.failure(.somethingWentWrong))
+                return
             }
             
             let feedItems = paginate(from: 0, withLimit: limit)
@@ -87,11 +105,11 @@ class FeedUseCase {
         let posts = (try? postResult?.get()) ?? []
         let users = (try? userResult?.get()) ?? []
         let comments = (try? postCommentResult?.get()) ?? []
-        let images = (try? postImageResult?.get()) ?? []
+        // let images = (try? postImageResult?.get()) ?? []
         
         let usersDict = Dictionary(uniqueKeysWithValues: users.map { ($0.id, $0) })
         let commentsDict = Dictionary(grouping: comments, by: { $0.postID })
-        let imagesDict = Dictionary(grouping: images, by: { $0.albumID })
+        //let imagesDict = Dictionary(grouping: images, by: { $0.albumID })
         
         let end = min(start + limit, posts.count)
         guard start < end else { return [] }
@@ -101,11 +119,22 @@ class FeedUseCase {
         return pagedPosts.map { post in
             let user = usersDict[post.userID]
             let postComments = commentsDict[post.id] ?? []
-            let postImages = imagesDict[post.id] ?? []
+            
+            //let postImages = imagesDict[post.id] ?? []
+            //https://dummyjson.com/docs/image
+            let nameToShow = (user?.name ?? "Dummy Image") + " PostID: " + String(post.id ?? 0)
+            let parts = nameToShow.components(separatedBy: " ")
+                .compactMap { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+            let hexString = UIColor.from(id: post.id ?? 0).hexString.replacingOccurrences(of: "#", with: "")
+            let imageURL = "https://dummyjson.com/image/400x400/\(hexString)?type=webp&text=\(parts.joined(separator: "+"))"
+            
             return FeedItem(post: post,
                             user: user,
                             comments: postComments,
-                            images: postImages)
+                            dummyImage: imageURL
+                            //images: postImages
+            )
         }
     }
 }

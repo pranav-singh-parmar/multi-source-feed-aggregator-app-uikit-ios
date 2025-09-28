@@ -24,6 +24,11 @@ class PostDetailsTableViewCell: UITableViewCell {
     //MARK: TableViewCell Life Cycle Methods
     override func awakeFromNib() {
         super.awakeFromNib()
+        setUpView()
+    }
+    
+    //MARK: UI Related
+    private func setUpView() {
         authorNameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         authorContactLabel.font = .systemFont(ofSize: 15, weight: .medium)
         authorCompanyLabel.font = .systemFont(ofSize: 15, weight: .regular)
@@ -41,12 +46,14 @@ class PostDetailsTableViewCell: UITableViewCell {
         postBodyLabel.numberOfLines = 0
     }
     
-    //MARK: UI Related
     func setUpView(withFeed feed: FeedItem?) {
         authorNameLabel.text = feed?.user?.name ?? ""
         authorContactLabel.text = "\(feed?.user?.email ?? "")\n\(feed?.user?.phone ?? "")"
         authorAddressLabel.text = "Address: \(feed?.user?.address?.completeAddress ?? "")"
         authorCompanyLabel.text = "Company: \(feed?.user?.company?.name ?? "")"
+        
+        postIV.loadImage(fromURLString: feed?.dummyImage ?? "")
+        
         postTitleLabel.text = feed?.post?.title ?? ""
         postBodyLabel.text = feed?.post?.body ?? ""
         let comments = feed?.comments ?? []

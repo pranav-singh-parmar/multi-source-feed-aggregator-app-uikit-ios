@@ -17,7 +17,7 @@ class PostRepository {
     
     func getPosts(completion: @escaping (RepositoryResult<[PostModel]>) -> Void) {
         dataSource.getPosts() { [weak self] result in
-            guard let self else { return }
+            guard self != nil else { return }
             
             switch result {
             case .success(let posts):

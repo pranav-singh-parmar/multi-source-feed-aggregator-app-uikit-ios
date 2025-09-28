@@ -16,5 +16,6 @@ struct FeedItem {
     let post: PostModel?
     let user: UserModel?
     let comments: [PostCommentModel]?
-    let images: [PostImageModel]?
+    //let images: [PostImageModel]?
+    let dummyImage: String?
 }

@@ -67,6 +67,8 @@ class FeedViewController: UIViewController {
     
     @objc func switchToggled(_ sender: UISwitch) {
         viewModel.toggleCommentsVisibility()
+        let message = viewModel.showComments ? "Comments Count Visible" : "Comments Count Hidden"
+        self.showToast(withMessage: message)
     }
     
     //MARK: IBActions
@@ -132,7 +134,7 @@ extension FeedViewController: FeedViewDelegate {
         }
     }
     
-    func didReloadFeeds() {
+    func didReloadFeeds(withError error: FeedUseCaseError?) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             
@@ -143,11 +145,18 @@ extension FeedViewController: FeedViewDelegate {
                 activityIndicator.stopAnimating()
             }
             if viewModel.currentLength == 0 {
-                currentStateLabel.text = "No Data Available"
+                if let error {
+                    currentStateLabel.text = error.localizedDescription
+                } else {
+                    currentStateLabel.text = "No Data Available"
+                }
                 currentStateLabel.isHidden = false
                 retryButton.isHidden = false
                 feedsTV.isHidden = true
             } else {
+                if let error {
+                    self.showToast(withMessage: error.localizedDescription)
+                }
                 currentStateLabel.isHidden = true
                 retryButton.isHidden = true
                 feedsTV.isHidden = false

@@ -46,13 +46,13 @@
                         </subviews>
                     </stackView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mdv-bv-FrQ">
-                        <rect key="frame" x="0.0" y="123.33333333333331" width="320" height="320"/>
+                        <rect key="frame" x="16" y="123.33333333333331" width="288" height="288"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="mdv-bv-FrQ" secondAttribute="height" multiplier="1:1" id="Zl1-fb-BrH"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="20i-vl-5AQ">
-                        <rect key="frame" x="16" y="451.33333333333331" width="288" height="72.999999999999943"/>
+                        <rect key="frame" x="16" y="419.33333333333331" width="288" height="73"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Dk-83-3Bb">
                                 <rect key="frame" x="0.0" y="0.0" width="288" height="20.333333333333332"/>
@@ -81,10 +81,10 @@
                     <constraint firstItem="20i-vl-5AQ" firstAttribute="top" secondItem="mdv-bv-FrQ" secondAttribute="bottom" constant="8" id="OnW-Q7-rAo"/>
                     <constraint firstAttribute="trailing" secondItem="20i-vl-5AQ" secondAttribute="trailing" constant="16" id="PIU-wd-i4C"/>
                     <constraint firstItem="kb1-nY-PKC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="QuB-Vs-qZF"/>
-                    <constraint firstItem="mdv-bv-FrQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Wu8-xw-7oi"/>
+                    <constraint firstItem="mdv-bv-FrQ" firstAttribute="trailing" secondItem="kb1-nY-PKC" secondAttribute="trailing" id="bFI-ot-wcd"/>
+                    <constraint firstItem="mdv-bv-FrQ" firstAttribute="leading" secondItem="kb1-nY-PKC" secondAttribute="leading" id="dNp-eG-s7r"/>
                     <constraint firstItem="mdv-bv-FrQ" firstAttribute="top" secondItem="kb1-nY-PKC" secondAttribute="bottom" constant="8" id="dUP-QO-mJg"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="20i-vl-5AQ" secondAttribute="bottom" constant="16" id="hW3-0u-u5L"/>
-                    <constraint firstAttribute="trailing" secondItem="mdv-bv-FrQ" secondAttribute="trailing" id="jY4-os-WyT"/>
                     <constraint firstItem="20i-vl-5AQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="nAG-a6-uiC"/>
                 </constraints>
             </tableViewCellContentView>
