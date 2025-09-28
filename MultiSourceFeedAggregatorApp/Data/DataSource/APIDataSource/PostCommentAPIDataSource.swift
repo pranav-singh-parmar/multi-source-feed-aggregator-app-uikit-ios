@@ -10,7 +10,7 @@ import Foundation
 class PostCommentAPIDataSource: PostCommentDataSourceProtocol {
     func getComments(completion:  @escaping (DataSourceResult<[PostCommentModel]>) -> Void) {
         do {
-            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .users)
+            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .comments)
             urlRequest.requestResponse(in: .json)
             
             urlRequest.sendAPIRequest { [weak self] result in

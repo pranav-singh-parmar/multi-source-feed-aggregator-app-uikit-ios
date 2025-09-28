@@ -10,7 +10,7 @@ import Foundation
 class PostImageAPIDataSource: PostImageDataSourceProtocol {
     func getImages(completion:  @escaping (DataSourceResult<[PostImageModel]>) -> Void) {
         do {
-            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .posts)
+            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .photos)
             urlRequest.requestResponse(in: .json)
             
             urlRequest.sendAPIRequest { [weak self] result in

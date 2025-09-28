@@ -10,7 +10,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedViewController" customModule="MultiSourceFeedAggregatorApp" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="59w-cW-Iq2" id="7ME-eM-QRb"/>
+                <outlet property="currentStateLabel" destination="j2f-WM-bTl" id="Ai4-CO-gIi"/>
                 <outlet property="feedsTV" destination="dly-Id-063" id="pHj-s6-7UW"/>
+                <outlet property="retryButton" destination="Jti-v8-2um" id="u3q-Jt-xc8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,19 +26,45 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="22k-Zm-mPJ">
+                    <rect key="frame" x="161.66666666666666" y="371.66666666666669" width="70" height="108.66666666666669"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="59w-cW-Iq2">
+                            <rect key="frame" x="16.333333333333343" y="0.0" width="37" height="37"/>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2f-WM-bTl">
+                            <rect key="frame" x="14.333333333333346" y="49" width="41.333333333333343" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jti-v8-2um">
+                            <rect key="frame" x="0.0" y="81.333333333333314" width="70" height="27.333333333333329"/>
+                            <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Retry" image="arrow.clockwise" catalog="system"/>
+                            <connections>
+                                <action selector="retryBTNACN:" destination="-1" eventType="touchUpInside" id="Tfq-o0-f41"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="dly-Id-063" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1Z5-ar-YCX"/>
+                <constraint firstItem="22k-Zm-mPJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Msm-Zd-cdd"/>
                 <constraint firstItem="dly-Id-063" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="bQV-vC-TEx"/>
                 <constraint firstItem="dly-Id-063" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nLv-IA-T89"/>
+                <constraint firstItem="22k-Zm-mPJ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="rUa-n9-K0a"/>
                 <constraint firstAttribute="bottom" secondItem="dly-Id-063" secondAttribute="bottom" id="yDz-nm-6Aq"/>
             </constraints>
             <point key="canvasLocation" x="57.251908396946561" y="20.422535211267608"/>
         </view>
     </objects>
     <resources>
+        <image name="arrow.clockwise" catalog="system" width="110" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

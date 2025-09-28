@@ -18,16 +18,24 @@ struct UserModel: Codable {
 
 // MARK: - UserAddressModel
 struct UserAddressModel: Codable {
-    let street, suite, city, zipcode: String
-    let geo: UserAddressGeoModel
+    let street, suite, city, zipcode: String?
+    let geo: UserAddressGeoModel?
+    
+    var completeAddress: String {
+        let parts = [street, suite, city, zipcode]
+            .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        
+        return parts.joined(separator: ", ")
+    }
 }
 
 // MARK: - UserAddressGeoModel
 struct UserAddressGeoModel: Codable {
-    let lat, lng: String
+    let lat, lng: String?
 }
 
 // MARK: - UserCompanyModel
 struct UserCompanyModel: Codable {
-    let name, catchPhrase, bs: String
+    let name, catchPhrase, bs: String?
 }

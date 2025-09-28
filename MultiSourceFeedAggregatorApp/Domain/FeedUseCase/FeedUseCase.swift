@@ -15,12 +15,13 @@ class FeedUseCase {
     private let postImageREPO = PostImageRepository(dataSource: PostImageAPIDataSource())
     
     private var postResult: RepositoryResult<[PostModel]>?
+    private var totalPosts = 0
     private var userResult: RepositoryResult<[UserModel]>?
     private var postCommentResult: RepositoryResult<[PostCommentModel]>?
     private var postImageResult: RepositoryResult<[PostImageModel]>?
     
     func fetchDetails(withLimit limit: Int,
-                      completion: @escaping (Result<[FeedModel], Error>) -> Void) {
+                      completion: @escaping (Result<Feed, Error>) -> Void) {
         let dispatchGroup = DispatchGroup()
         
         dispatchGroup.enter()
@@ -28,6 +29,7 @@ class FeedUseCase {
             guard let self else { return }
             
             postResult = result
+            totalPosts = ((try? postResult?.get()) ?? []).count
             dispatchGroup.leave()
         }
         
@@ -75,12 +77,13 @@ class FeedUseCase {
                 print("Posts API failed: \(e.localizedDescription)")
             }
             
-            let feedModel = paginate(from: 0, withLimit: limit)
-            completion(.success(feedModel))
+            let feedItems = paginate(from: 0, withLimit: limit)
+            completion(.success(Feed(totalPosts: totalPosts,
+                                     items: feedItems)))
         }
     }
     
-    func paginate(from start: Int, withLimit limit: Int) -> [FeedModel] {
+    func paginate(from start: Int, withLimit limit: Int) -> [FeedItem] {
         let posts = (try? postResult?.get()) ?? []
         let users = (try? userResult?.get()) ?? []
         let comments = (try? postCommentResult?.get()) ?? []
@@ -99,10 +102,10 @@ class FeedUseCase {
             let user = usersDict[post.userID]
             let postComments = commentsDict[post.id] ?? []
             let postImages = imagesDict[post.id] ?? []
-            return FeedModel(post: post,
-                             user: user,
-                             comments: postComments,
-                             images: postImages)
+            return FeedItem(post: post,
+                            user: user,
+                            comments: postComments,
+                            images: postImages)
         }
     }
 }
