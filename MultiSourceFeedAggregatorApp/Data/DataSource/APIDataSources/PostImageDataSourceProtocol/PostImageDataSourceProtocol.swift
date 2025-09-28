@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol PostImageDataSourceProtocol {
+protocol PostImageAPIDataSource {
     func getImages(completion: @escaping (DataSourceResult<[PostImageModel]>) -> Void)
 }

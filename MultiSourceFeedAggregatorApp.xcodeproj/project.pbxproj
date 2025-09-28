@@ -18,7 +18,7 @@
 		15DAD8A62E87E79100A7DD50 /* Exceptions for "MultiSourceFeedAggregatorApp" folder in "MultiSourceFeedAggregatorApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				App/Info.plist,
 			);
 			target = 15DAD8932E87E78E00A7DD50 /* MultiSourceFeedAggregatorApp */;
 		};

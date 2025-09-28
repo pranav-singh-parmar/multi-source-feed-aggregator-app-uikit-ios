@@ -1,5 +1,5 @@
 //
-//  FeedUseCase.swift
+//  FeedUseCaseIMPL.swift
 //  MultiSourceFeedAggregatorApp
 //
 //  Created by Pranav Singh on 27/09/25.
@@ -8,24 +8,13 @@
 import Foundation
 import UIKit
 
-enum FeedUseCaseError: Error, LocalizedError {
-    case somethingWentWrong
+class FeedUseCaseIMPL: FeedUseCase {
     
-    var errorDescription: String? {
-        switch self {
-        case .somethingWentWrong:
-            return NSLocalizedString("Something Went Wrong",
-                                     comment: "Something Went Wrong")
-        }
-    }
-}
-
-class FeedUseCase {
-    
-    private let postREPO = PostRepository(dataSource: PostAPIDataSource())
-    private let userREPO = UserRepository(dataSource: UserAPIDataSource())
-    private let postCommentREPO = PostCommentRepository(dataSource: PostCommentAPIDataSource())
-    private let postImageREPO = PostImageRepository(dataSource: PostImageAPIDataSource())
+    //MARK: Properties
+    private let postREPO: PostRepository
+    private let userREPO: UserRepository
+    private let postCommentREPO: PostCommentRepository
+    private let postImageREPO: PostImageRepository
     
     private var postResult: RepositoryResult<[PostModel]>?
     private var userResult: RepositoryResult<[UserModel]>?
@@ -34,6 +23,18 @@ class FeedUseCase {
     
     private var totalPosts = 0
     
+    //MARK: Init
+    init(postREPO: PostRepository = PostRepositoryIMPL(),
+         userREPO: UserRepository = UserRepositoryIMPL(),
+         postCommentREPO: PostCommentRepository = PostCommentRepositoryIMPL(),
+         postImageREPO: PostImageRepository = PostImageRepositoryIMPL()) {
+        self.postREPO = postREPO
+        self.userREPO = userREPO
+        self.postCommentREPO = postCommentREPO
+        self.postImageREPO = postImageREPO
+    }
+    
+    //MARK: Protocol Implementation
     func fetchDetails(withLimit limit: Int,
                       completion: @escaping (Result<Feed, FeedUseCaseError>) -> Void) {
         let dispatchGroup = DispatchGroup()
@@ -75,23 +76,36 @@ class FeedUseCase {
         dispatchGroup.notify(queue: .main) { [weak self] in
             guard let self else { return }
             
-            if case .failure(let e) = postResult {
-                completion(.failure(.somethingWentWrong))
+            if case .failure(let error) = postResult {
+                switch error {
+                case .dataSourceError(let dataSourceError):
+                    switch dataSourceError {
+                    case .apiRequestError(let apiRequestError, let errorMessage):
+                        switch apiRequestError {
+                        case .internetNotConnected:
+                            completion(.failure(.internetNotConnected))
+                        default:
+                            completion(.failure(.somethingWentWrong(errorMessage: errorMessage)))
+                        }
+                    default:
+                        completion(.failure(.somethingWentWrong(errorMessage: nil)))
+                    }
+                }
                 return
             }
             
             if case .failure(let e) = postResult {
-                completion(.failure(.somethingWentWrong))
+                completion(.failure(.somethingWentWrong(errorMessage: nil)))
                 return
             }
             
             if case .failure(let e) = postResult {
-                completion(.failure(.somethingWentWrong))
+                completion(.failure(.somethingWentWrong(errorMessage: nil)))
                 return
             }
             
             if case .failure(let e) = postResult {
-                completion(.failure(.somethingWentWrong))
+                completion(.failure(.somethingWentWrong(errorMessage: nil)))
                 return
             }
             

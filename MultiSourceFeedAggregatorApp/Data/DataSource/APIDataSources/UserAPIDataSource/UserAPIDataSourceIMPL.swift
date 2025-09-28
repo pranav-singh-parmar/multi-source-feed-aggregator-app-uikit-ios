@@ -1,5 +1,5 @@
 //
-//  PostCommentAPIDataSource.swift
+//  UserAPIDataSourceIMPL.swift
 //  MultiSourceFeedAggregatorApp
 //
 //  Created by Pranav Singh on 27/09/25.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-class PostCommentAPIDataSource: PostCommentDataSourceProtocol {
-    func getComments(completion:  @escaping (DataSourceResult<[PostCommentModel]>) -> Void) {
+class UserAPIDataSourceIMPL: UserAPIDataSource {
+    func getUsers(completion:  @escaping (DataSourceResult<[UserModel]>) -> Void) {
         do {
-            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .comments)
+            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .users)
             urlRequest.requestResponse(in: .json)
             
             urlRequest.sendAPIRequest { [weak self] result in
@@ -18,8 +18,8 @@ class PostCommentAPIDataSource: PostCommentDataSourceProtocol {
                 
                 switch result {
                 case .success(_, let data):
-                    if let comments = data.toStruct([PostCommentModel].self) {
-                        completion(.success(comments))
+                    if let users = data.toStruct([UserModel].self) {
+                        completion(.success(users))
                     } else {
                         completion(.failure(.decodingError))
                     }

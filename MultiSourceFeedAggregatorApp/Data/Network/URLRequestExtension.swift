@@ -288,9 +288,7 @@ extension URLRequest {
     
     private func printApiError(_ apiError: APIRequestError) {
         addLog(URLRequest.apiErrorTAG, "\(apiError)")
-        if apiError.localizedDescription != APIRequestError.internetNotConnected.localizedDescription {
-            printResponseDetailsTag(isStarted: false)
-        }
+        printResponseDetailsTag(isStarted: false)
     }
     
     private func printRequestDetailsTag(isStarted: Bool) {

@@ -1,5 +1,5 @@
 //
-//  PostRepository.swift
+//  PostImageRepositoryIMPL.swift
 //  MultiSourceFeedAggregatorApp
 //
 //  Created by Pranav Singh on 27/09/25.
@@ -7,16 +7,16 @@
 
 import Foundation
 
-class PostRepository {
+class PostImageRepositoryIMPL: PostImageRepository {
     
-    private let dataSource: any PostDataSourceProtocol
+    private let apiDS: any PostImageAPIDataSource
     
-    init(dataSource: any PostDataSourceProtocol) {
-        self.dataSource = dataSource
+    init(apiDS: any PostImageAPIDataSource = PostImageAPIDataSourceIMPL()) {
+        self.apiDS = apiDS
     }
     
-    func getPosts(completion: @escaping (RepositoryResult<[PostModel]>) -> Void) {
-        dataSource.getPosts() { [weak self] result in
+    func getImages(completion: @escaping (RepositoryResult<[PostImageModel]>) -> Void) {
+        apiDS.getImages() { [weak self] result in
             guard self != nil else { return }
             
             switch result {

@@ -1,5 +1,5 @@
 //
-//  UserRepository.swift
+//  UserRepositoryIMPL.swift
 //  MultiSourceFeedAggregatorApp
 //
 //  Created by Pranav Singh on 27/09/25.
@@ -7,16 +7,16 @@
 
 import Foundation
 
-class UserRepository {
+class UserRepositoryIMPL: UserRepository {
     
-    private let dataSource: any UserDataSourceProtocol
+    private let apiDS: any UserAPIDataSource
     
-    init(dataSource: any UserDataSourceProtocol) {
-        self.dataSource = dataSource
+    init(apiDS: any UserAPIDataSource = UserAPIDataSourceIMPL()) {
+        self.apiDS = apiDS
     }
     
     func getUsers(completion: @escaping (RepositoryResult<[UserModel]>) -> Void) {
-        dataSource.getUsers() { [weak self] result in
+        apiDS.getUsers() { [weak self] result in
             guard self != nil else { return }
             
             switch result {

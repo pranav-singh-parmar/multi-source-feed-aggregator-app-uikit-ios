@@ -15,10 +15,10 @@ protocol FeedViewDelegate: AnyObject {
 }
 
 class FeedViewModel {
-    
+    //MARK: Properties
     private(set) var getPostsAS: APIRequestStatus = .notConsumedOnce
     
-    private let feedUC = FeedUseCase()
+    private let feedUC: any FeedUseCase
     
     private let limit = 10
     private(set) var feedItems = [FeedItem]()
@@ -27,6 +27,11 @@ class FeedViewModel {
     private(set) var showComments = true
     
     weak var delegate: (any FeedViewDelegate)? = nil
+    
+    //MARK: Init
+    init(feedUC: any FeedUseCase = FeedUseCaseIMPL()) {
+        self.feedUC = feedUC
+    }
     
     //MARK: Pagination Related
     var fetchedAllData: Bool {

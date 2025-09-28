@@ -1,5 +1,5 @@
 //
-//  PostCommentRepository.swift
+//  PostCommentRepositoryIMPL.swift
 //  MultiSourceFeedAggregatorApp
 //
 //  Created by Pranav Singh on 27/09/25.
@@ -7,16 +7,16 @@
 
 import Foundation
 
-class PostCommentRepository {
+class PostCommentRepositoryIMPL: PostCommentRepository {
     
-    private let dataSource: any PostCommentDataSourceProtocol
+    private let apiDS: any PostCommentAPIDataSource
     
-    init(dataSource: any PostCommentDataSourceProtocol) {
-        self.dataSource = dataSource
+    init(apiDS: any PostCommentAPIDataSource = PostCommentAPIDataSourceIMPL()) {
+        self.apiDS = apiDS
     }
     
     func getComments(completion: @escaping (RepositoryResult<[PostCommentModel]>) -> Void) {
-        dataSource.getComments { [weak self] result in
+        apiDS.getComments { [weak self] result in
             guard self != nil else { return }
             
             switch result {

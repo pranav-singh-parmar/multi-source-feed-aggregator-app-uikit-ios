@@ -1,5 +1,5 @@
 //
-//  PostAPIDataSource.swift
+//  PostImageAPIDataSourceIMPL.swift
 //  MultiSourceFeedAggregatorApp
 //
 //  Created by Pranav Singh on 27/09/25.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-class PostAPIDataSource: PostDataSourceProtocol {
-    func getPosts(completion:  @escaping (DataSourceResult<[PostModel]>) -> Void) {
+class PostImageAPIDataSourceIMPL: PostImageAPIDataSource {
+    func getImages(completion:  @escaping (DataSourceResult<[PostImageModel]>) -> Void) {
         do {
-            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .posts)
+            var urlRequest = try URLRequest(ofHTTPMethod: .get, forAppEndpoint: .photos)
             urlRequest.requestResponse(in: .json)
             
             urlRequest.sendAPIRequest { [weak self] result in
@@ -18,8 +18,8 @@ class PostAPIDataSource: PostDataSourceProtocol {
                 
                 switch result {
                 case .success(_, let data):
-                    if let posts = data.toStruct([PostModel].self) {
-                        completion(.success(posts))
+                    if let images = data.toStruct([PostImageModel].self) {
+                        completion(.success(images))
                     } else {
                         completion(.failure(.decodingError))
                     }
