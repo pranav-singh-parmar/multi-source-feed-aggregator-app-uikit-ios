@@ -14,27 +14,21 @@ class UserCacheDataSourceIMPL: UserCacheDataSource {
     func saveUsers(_ users: [UserModel], completion: ((Bool) -> Void)?) {
         queue.async {
             UserDefaults.cachedUsers = users
-            DispatchQueue.main.async {
-                completion?(true)
-            }
+            completion?(true)
         }
     }
     
     func getUsers(completion: @escaping ([UserModel]?) -> Void) {
         queue.async {
             let users = UserDefaults.cachedUsers
-            DispatchQueue.main.async {
-                completion(users)
-            }
+            completion(users)
         }
     }
     
     func clear(completion: (() -> Void)? = nil) {
         queue.async {
             UserDefaults.cachedUsers = nil
-            DispatchQueue.main.async {
-                completion?()
-            }
+            completion?()
         }
     }
 }

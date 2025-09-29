@@ -14,27 +14,21 @@ class PostCacheDataSourceIMPL: PostCacheDataSource {
     func savePosts(_ posts: [PostModel], completion: ((Bool) -> Void)? = nil) {
         queue.async {
             UserDefaults.cachedPosts = posts
-            DispatchQueue.main.async {
-                completion?(true)
-            }
+            completion?(true)
         }
     }
     
     func getPosts(completion: @escaping ([PostModel]?) -> Void) {
         queue.async {
             let posts = UserDefaults.cachedPosts
-            DispatchQueue.main.async {
-                completion(posts)
-            }
+            completion(posts)
         }
     }
     
     func clear(completion: (() -> Void)? = nil) {
         queue.async {
             UserDefaults.cachedPosts = nil
-            DispatchQueue.main.async {
-                completion?()
-            }
+            completion?()
         }
     }
 }

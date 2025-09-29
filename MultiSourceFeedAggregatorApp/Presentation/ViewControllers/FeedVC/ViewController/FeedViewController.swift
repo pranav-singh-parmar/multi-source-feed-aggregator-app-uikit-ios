@@ -155,7 +155,7 @@ extension FeedViewController: FeedViewDelegate {
                 feedsTV.isHidden = true
             } else {
                 if fromCache {
-                    self.showToast(withMessage: "Offline Mode")
+                    self.showToast(withMessage: "Offline Mode\nInternet not Connected")
                 } else if let error {
                     self.showToast(withMessage: error.localizedDescription)
                 }

@@ -14,27 +14,21 @@ class PostCommentCacheDataSourceIMPL: PostCommentCacheDataSource {
     func savePostComments(_ postComments: [PostCommentModel], completion: ((Bool) -> Void)?) {
         queue.async {
             UserDefaults.cachedPostComments = postComments
-            DispatchQueue.main.async {
-                completion?(true)
-            }
+            completion?(true)
         }
     }
     
     func getPostComments(completion: @escaping ([PostCommentModel]?) -> Void) {
         queue.async {
             let postComments = UserDefaults.cachedPostComments
-            DispatchQueue.main.async {
-                completion(postComments)
-            }
+            completion(postComments)
         }
     }
     
     func clear(completion: (() -> Void)? = nil) {
         queue.async {
             UserDefaults.cachedPostComments = nil
-            DispatchQueue.main.async {
-                completion?()
-            }
+            completion?()
         }
     }
 }

@@ -7,8 +7,11 @@
 
 import Foundation
 
-typealias UseCaseResult<T> = Result<RepositorySuccess<T>, UseCaseError>
-typealias UseCaseSuccess<T> = (data: T, isFromCache: Bool)
+typealias UseCaseResult<T> = Result<UseCaseSuccess<T>, UseCaseError>
+struct UseCaseSuccess<T> {
+    let data: T
+    let isFromCache: Bool
+}
 
 enum UseCaseError: Error, LocalizedError {
     case internetNotConnected

@@ -13,27 +13,21 @@ class PostImageCacheDataSourceIMPL: PostImageCacheDataSource {
     func savePostImages(_ postImages: [PostImageModel], completion: ((Bool) -> Void)?) {
         queue.async {
             UserDefaults.cachedPostImages = postImages
-            DispatchQueue.main.async {
-                completion?(true)
-            }
+            completion?(true)
         }
     }
     
     func getPostImages(completion: @escaping ([PostImageModel]?) -> Void) {
         queue.async {
             let postImages = UserDefaults.cachedPostImages
-            DispatchQueue.main.async {
-                completion(postImages)
-            }
+            completion(postImages)
         }
     }
     
     func clear(completion: (() -> Void)? = nil) {
         queue.async {
             UserDefaults.cachedPostImages = nil
-            DispatchQueue.main.async {
-                completion?()
-            }
+            completion?()
         }
     }
 }

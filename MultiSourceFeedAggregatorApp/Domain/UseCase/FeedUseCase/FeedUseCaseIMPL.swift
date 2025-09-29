@@ -99,8 +99,8 @@ class FeedUseCaseIMPL: FeedUseCase {
             let isPostsFromCache = (try? postResult?.get().isFromCache) ?? false
             let isUsersFromCache = (try? userResult?.get().isFromCache) ?? false
             let isPostCommentsFromCache = (try? postCommentResult?.get().isFromCache) ?? false
-            let isPostImageFromCache = (try? postCommentResult?.get().isFromCache) ?? false
-            let isFromCache = isPostsFromCache || isUsersFromCache || isPostCommentsFromCache || isPostImageFromCache
+            let isPostImagesFromCache = (try? postImageResult?.get().isFromCache) ?? false
+            let isFromCache = isPostsFromCache || isUsersFromCache || isPostCommentsFromCache || isPostImagesFromCache
             
             let feedItems = paginate(from: 0, withLimit: limit)
             completion(.success(UseCaseSuccess(data: Feed(totalPosts: totalPosts,

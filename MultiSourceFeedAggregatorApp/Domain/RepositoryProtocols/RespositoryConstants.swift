@@ -8,7 +8,10 @@
 import Foundation
 
 typealias RepositoryResult<T> = Result<RepositorySuccess<T>, RepositoryError>
-typealias RepositorySuccess<T> = (data: T, isFromCache: Bool)
+struct RepositorySuccess<T> {
+    let data: T
+    let isFromCache: Bool
+}
 
 enum RepositoryError: Error {
     case apiDataSourceError(APIDataSourceError)
