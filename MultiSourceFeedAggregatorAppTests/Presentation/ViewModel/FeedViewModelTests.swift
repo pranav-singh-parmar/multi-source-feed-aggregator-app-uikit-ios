@@ -20,7 +20,7 @@ final class FeedViewModelTests: XCTestCase {
         let feed = Feed(totalPosts: 1, items: feedItems)
         
         let mockUseCase = MockFeedUseCase()
-        mockUseCase.fetchDetailsResult = .success(RepositorySuccess(data: feed, isFromCache: false))
+        mockUseCase.fetchDetailsResult = .success(UseCaseSuccess(data: feed, isFromCache: false))
         
         let mockDelegate = MockFeedViewDelegate()
         
